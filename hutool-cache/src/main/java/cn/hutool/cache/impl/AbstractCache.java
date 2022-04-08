@@ -176,7 +176,7 @@ public abstract class AbstractCache<K, V> implements Cache<K, V> {
 		// 尝试读取缓存，使用乐观读锁
 		long stamp = lock.tryOptimisticRead();
 		CacheObj<K, V> co = cacheMap.get(key);
-		if(false == lock.validate(stamp)){
+		if (false == lock.validate(stamp)) {
 			// 有写线程修改了此对象，悲观读
 			stamp = lock.readLock();
 			try {
@@ -224,7 +224,7 @@ public abstract class AbstractCache<K, V> implements Cache<K, V> {
 
 	/**
 	 * 清理实现<br>
-	 * 子类实现此方法时无需加锁
+	 * 子类实现此方法时无需加锁  因为外层已经加了写锁了
 	 *
 	 * @return 清理数
 	 */
@@ -320,7 +320,7 @@ public abstract class AbstractCache<K, V> implements Cache<K, V> {
 	 * @return 所有键
 	 * @since 5.5.9
 	 */
-	public Set<K> keySet(){
+	public Set<K> keySet() {
 		return this.cacheMap.keySet();
 	}
 
